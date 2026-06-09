@@ -414,6 +414,54 @@ const TicketApproval = sequelize.define('TicketApproval', {
   },
 });
 
+const Notification = sequelize.define('Notification', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  type: {
+    type: DataTypes.ENUM('ticket', 'system', 'automation'),
+    defaultValue: 'system',
+  },
+  channel: {
+    type: DataTypes.ENUM('email', 'sms', 'system'),
+    defaultValue: 'email',
+  },
+  subject: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  body: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  recipients: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
+  status: {
+    type: DataTypes.ENUM('pending', 'queued', 'sent', 'failed'),
+    defaultValue: 'pending',
+  },
+  sent_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  delivered_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  failure_reason: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  metadata: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
+});
+
 // Define associations
 Role.hasMany(User);
 User.belongsTo(Role);
@@ -472,4 +520,5 @@ module.exports = {
   ClientUser,
   TicketTimeEntry,
   TicketApproval,
+  Notification,
 };

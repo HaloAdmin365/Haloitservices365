@@ -31,3 +31,23 @@ Then open `http://localhost:3000/login.html` in your browser.
 - Backend API endpoints use `/api/*`
 - Static pages are served from the same backend on port `3000`
 - `halo-system/backend/.env.example` is provided for environment configuration
+- AI support is enabled with Azure OpenAI via `halo-system/backend/ai/aiService.js`
+
+## xneelo / cPanel deployment
+
+This project is ready for xneelo/cPanel if your plan supports Node.js apps.
+
+1. Upload or clone the repository into your xneelo account.
+2. Open cPanel and use **Setup Node.js App**.
+   - Application root: `halo-system/backend`
+   - Application startup file: `server.js`
+   - Node version: `24`
+3. Copy `.env.example` to `.env` and set production values:
+   - `PORT=3000`
+   - `NODE_ENV=production`
+   - `JWT_SECRET=<strong-secret>`
+   - `CORS_ORIGIN=https://haloitservices365.co.za`
+4. Install dependencies in the backend folder and start the app.
+5. Enable AutoSSL for `haloitservices365.co.za` in cPanel to secure the site.
+
+If cPanel does not support Node apps directly, use the cPanel Terminal to run `npm install` and `npm start`, or deploy via a supported app manager.

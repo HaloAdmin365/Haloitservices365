@@ -1,0 +1,13 @@
+{
+  "applicationRoot": "halo-system/backend",
+  "startupFile": "server.js",
+  "nodeVersion": "24",
+  "appUrl": "https://haloitservices365.co.za",
+  "environment": {
+    "PORT": "3000",
+    "NODE_ENV": "production",
+    "JWT_SECRET": "<strong-secret>",
+    "CORS_ORIGIN": "https://haloitservices365.co.za",
+    "APP_URL": "https://haloitservices365.co.za"
+  }
+}

@@ -21,6 +21,8 @@ const clientRoutes = require('./routes/clients');
 const slaRoutes = require('./routes/sla');
 const clientPortalRoutes = require('./routes/clientPortal');
 const monitoringRoutes = require('./routes/monitoring');
+const notificationRoutes = require('./routes/notifications');
+const automationRoutes = require('./routes/automation');
 
 // Import services
 const monitoringService = require('./services/monitoring');
@@ -98,6 +100,8 @@ const startServer = async () => {
     app.use('/api/clients', clientRoutes);
     app.use('/api/sla', slaRoutes);
     app.use('/api/portal', clientPortalRoutes);
+    app.use('/api/notifications', notificationRoutes);
+    app.use('/api/automation', automationRoutes);
 
     // Initialize monitoring service with demo data
     console.log('🔍 Initializing monitoring service...');

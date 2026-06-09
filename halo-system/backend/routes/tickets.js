@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 const router = express.Router();
 const auditService = require('../services/audit');
 const SlaService = require('../services/sla');
+const notificationService = require('../services/notification');
 const { authenticate } = require('../middleware/auth');
 const { requirePermission } = require('../middleware/rbac');
 const {
@@ -120,6 +121,12 @@ router.post(
         priority,
         client_id,
       });
+
+      try {
+        await notificationService.sendTicketNotification(ticket, 'created');
+      } catch (notificationError) {
+        console.warn('Ticket creation notification failed:', notificationError.message);
+      }
 
       res.status(201).json({ success: true, ticket });
     } catch (error) {
@@ -341,6 +348,12 @@ router.post('/:id/approve', authenticate, requirePermission('ticket:approve'), [
     await auditService.log(req, 'ticket_approval_updated', 'tickets', ticket.id, {
       approval_status: ticket.approval_status,
     });
+
+    try {
+      await notificationService.sendTicketNotification(ticket, `approval_${ticket.approval_status}`);
+    } catch (notificationError) {
+      console.warn('Ticket approval notification failed:', notificationError.message);
+    }
 
     res.json({ success: true, ticket });
   } catch (error) {
